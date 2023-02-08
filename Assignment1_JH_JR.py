@@ -24,11 +24,11 @@ column = [
     ],
     [sg.Button("Exit")]]
 
-intro_layout = [[sg.VPush()],
+layout = [[sg.VPush()],
          [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
          [sg.VPush()]]
 
-window = sg.Window('Pet Lyfe', intro_layout)
+window = sg.Window('Pet Lyfe', layout)
 
 while True:
     event, values = window.read()
