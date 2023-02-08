@@ -18,7 +18,8 @@ column = [
     sg.Text("First of all, what is your prefered pet?"),
     sg.Radio("Dog", "Group0"),
     sg.Radio("Cat", "Group0"),
-    sg.Radio("Other", "Group0")
+    sg.Radio("Other", "Group0"),
+    sg.Radio("No preference", "Group0")
     ],
     [
     sg.Text("What age range best describes you?"),
