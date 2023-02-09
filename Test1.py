@@ -23,33 +23,26 @@ column = [
     [
     sg.Text("What range of price are you willing to spend for the pet?",font=(fontRadio, fontSizeRadio)),
     sg.Radio("Under 100$", "Group1", default=True, font=(fontRadio, fontSizeRadio)),
-    sg.Radio("100$ - 400$", "Group1", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("401$ - 700$", "Group1", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("100$ - 700$", "Group1", font=(fontRadio, fontSizeRadio)),
     sg.Radio("700$+", "Group1", font=(fontRadio, fontSizeRadio))
     ],
     [
-    sg.Text("On a scale from 1 to 5, how active would you say you are?", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("1", "Group2",default=True, font=(fontRadio, fontSizeRadio)),
-    sg.Radio("2", "Group2",font=(fontRadio, fontSizeRadio)),
-    sg.Radio("3", "Group2", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("4", "Group2", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("5", "Group2", font=(fontRadio, fontSizeRadio))
+    sg.Text("How active would you say you are?", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("Not very active", "Group2",default=True, font=(fontRadio, fontSizeRadio)),
+    sg.Radio("Somewhat active", "Group2",font=(fontRadio, fontSizeRadio)),
+    sg.Radio("Very active", "Group2", font=(fontRadio, fontSizeRadio)),
     ],
     [
     sg.Text("How many hours per day are you away from home, for work or other reasons?", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("Less that 1 hour", "Group3", default=True, font=(fontRadio, fontSizeRadio)),
-    sg.Radio("2-3 hours", "Group3", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("3-5 hours", "Group3", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("5-8 hours", "Group3", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("8+ hours", "Group3", font=(fontRadio, fontSizeRadio))
+    sg.Radio("Less that 2 hours", "Group3", default=True, font=(fontRadio, fontSizeRadio)),
+    sg.Radio("2-6 hours", "Group3", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("6+ hours", "Group3", font=(fontRadio, fontSizeRadio))
     ],
     [
     sg.Text("How many hours per week are you willing to spend on training with your pet?",font=(fontRadio, fontSizeRadio)),
     sg.Radio("Less that 1 hour", "Group4",default=True, font=(fontRadio, fontSizeRadio)),
-    sg.Radio("2-3 hours", "Group4", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("3-4 hours", "Group4", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("4-5 hours", "Group4", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("5+ hours", "Group4", font=(fontRadio, fontSizeRadio))
+    sg.Radio("1-3 hours", "Group4", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("3+ hours", "Group4", font=(fontRadio, fontSizeRadio))
     ],
     [sg.Button("Submit", font=(fontRadio, fontSizeRadio))]]
 
