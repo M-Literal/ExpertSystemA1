@@ -2,7 +2,7 @@
 """
 Created on Mon Feb  6 21:03:13 2023
 
-@author: Justin Roy and James Humpfrey
+@author: Justin Roy and James Humphrey
 """
 
 import PySimpleGUI as sg
