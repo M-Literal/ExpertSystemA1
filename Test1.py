@@ -10,41 +10,19 @@ import PySimpleGUI as sg
 text = """Welcome to Pet Lyfe! This is an \"expert system\"  that will ask you a
 series of questions to estimate what kind of pet fits your lifestyle best.
 Select the different tabs and answer all questions to find out what kind
-of pet best suits your lifestyle."""
+of pet best suits your lifestyle Click NEXT to continue."""
 
+possiblePetList = ["Dog", "Cat", "Bird", "Hamster", "Lizard", "Fish"]
+print(possiblePetList)
 fontTitle = "Helvetica"
 fontSizeTitle = 25
 
-fontRadio = "Helvetica"
-fontSizeRadio = 20
-
+fontQuestion = "Helvetica"
+fontSizeQuestion = 20
 column = [
     [sg.Text(text, size=(60,4), justification="center",font=(fontTitle, fontSizeTitle)) ],
-    [
-    sg.Text("What range of price are you willing to spend for the pet?",font=(fontRadio, fontSizeRadio)),
-    sg.Radio("Under 100$", "Group1", default=True, font=(fontRadio, fontSizeRadio)),
-    sg.Radio("100$ - 700$", "Group1", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("700$+", "Group1", font=(fontRadio, fontSizeRadio))
-    ],
-    [
-    sg.Text("How active would you say you are?", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("Not very active", "Group2",default=True, font=(fontRadio, fontSizeRadio)),
-    sg.Radio("Somewhat active", "Group2",font=(fontRadio, fontSizeRadio)),
-    sg.Radio("Very active", "Group2", font=(fontRadio, fontSizeRadio)),
-    ],
-    [
-    sg.Text("How many hours per day are you away from home, for work or other reasons?", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("Less that 2 hours", "Group3", default=True, font=(fontRadio, fontSizeRadio)),
-    sg.Radio("2-6 hours", "Group3", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("6+ hours", "Group3", font=(fontRadio, fontSizeRadio))
-    ],
-    [
-    sg.Text("How many hours per week are you willing to spend on training with your pet?",font=(fontRadio, fontSizeRadio)),
-    sg.Radio("Less that 1 hour", "Group4",default=True, font=(fontRadio, fontSizeRadio)),
-    sg.Radio("1-3 hours", "Group4", font=(fontRadio, fontSizeRadio)),
-    sg.Radio("3+ hours", "Group4", font=(fontRadio, fontSizeRadio))
-    ],
-    [sg.Button("Submit", font=(fontRadio, fontSizeRadio))]]
+    
+    [sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
 
 layout = [[sg.VPush()],
          [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
@@ -55,11 +33,97 @@ window = sg.Window('Pet Lyfe', layout)
 while True:
     event, values = window.read()
 
-    if event == "Submit" or event ==  sg.WIN_CLOSED:
+    if event == "Next" or event ==  sg.WIN_CLOSED:
+        break
+    
+window.close()
+column = [
+    
+    [
+    sg.Text("Are you alergic to any of these pets? (check all that apply)",font=(fontQuestion, fontSizeQuestion)),
+    sg.Checkbox("Dog", default=False,  font=(fontQuestion, fontSizeQuestion)),
+    sg.Checkbox("Cat", default=False,font=(fontQuestion, fontSizeQuestion)),
+    sg.Checkbox("Bird", default=False, font=(fontQuestion, fontSizeQuestion)),
+    sg.Checkbox("Hamster",default=False, font=(fontQuestion, fontSizeQuestion))
+    ],
+    [sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
+
+layout = [[sg.VPush()],
+         [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
+         [sg.VPush()]]
+
+window = sg.Window('Pet Lyfe', layout)
+
+while True:
+    event, values = window.read()
+
+    if event == "Next" or event ==  sg.WIN_CLOSED:
+        break
+    
+window.close()
+valuesQ1 = values 
+
+#inference engine removing pets that the user is allergic to from list
+if valuesQ1[0]:
+    possiblePetList.remove("Dog")
+if valuesQ1[1]:
+    possiblePetList.remove("Cat")
+if valuesQ1[2]:
+    possiblePetList.remove("Bird")
+if valuesQ1[3]:
+    possiblePetList.remove("Hamster")
+
+column = [
+    
+    [
+    sg.Text("Do you own any of these pets? (check all that apply)",font=(fontQuestion, fontSizeQuestion)),
+    sg.Checkbox("Dog", default=False,  font=(fontQuestion, fontSizeQuestion)),
+    sg.Checkbox("Cat", default=False,font=(fontQuestion, fontSizeQuestion)),
+    sg.Checkbox("Bird", default=False, font=(fontQuestion, fontSizeQuestion)),
+    sg.Checkbox("Hamster",default=False, font=(fontQuestion, fontSizeQuestion)),
+    sg.Checkbox("Lizard", default=False,  font=(fontQuestion, fontSizeQuestion)),
+    sg.Checkbox("Fish", default=False,font=(fontQuestion, fontSizeQuestion)),
+    ],
+    [sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
+
+layout = [[sg.VPush()],
+         [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
+         [sg.VPush()]]
+
+window = sg.Window('Pet Lyfe', layout)
+
+while True:
+    event, values = window.read()
+
+    if event == "Next" or event ==  sg.WIN_CLOSED:
         break
     
 window.close()
 
+valuesQ2 = values 
+
+textCatWarning = """Just a reminder that cats can cohabitate with any of the pets we will recomend as long as proper cat proofing is done to cages and aquariums."""
+
+#inference engine that warns the user of they own a cat
+if (valuesQ2[1]):
+    column = [
+    [sg.Text(textCatWarning, size=(60,4), justification="center",font=(fontTitle, fontSizeTitle)) ],
+    
+    [sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
+    layout = [[sg.VPush()],
+        [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
+        [sg.VPush()]]
+    window = sg.Window('Pet Lyfe', layout)
+    while True:
+        event, values = window.read()
+
+        if event == "Next" or event ==  sg.WIN_CLOSED:
+            break
+    
+    window.close()
 
 
-print(values)
+print(valuesQ1)
+print(valuesQ2)
+
+print(possiblePetList)
