@@ -12,40 +12,46 @@ series of questions to estimate what kind of pet fits your lifestyle best.
 Select the different tabs and answer all questions to find out what kind
 of pet best suits your lifestyle."""
 
+fontTitle = "Helvetica"
+fontSizeTitle = 25
+
+fontRadio = "Helvetica"
+fontSizeRadio = 20
+
 column = [
-    [sg.Text(text, size=(60,4), justification="center")],
+    [sg.Text(text, size=(60,4), justification="center",font=(fontTitle, fontSizeTitle)) ],
     [
-    sg.Text("What range of price are you willing to spend for the pet?"),
-    sg.Radio("Under 100$", "Group1"),
-    sg.Radio("100$ - 400$", "Group1"),
-    sg.Radio("401$ - 700$", "Group1"),
-    sg.Radio("700$+", "Group2")
+    sg.Text("What range of price are you willing to spend for the pet?",font=(fontRadio, fontSizeRadio)),
+    sg.Radio("Under 100$", "Group1", default=True, font=(fontRadio, fontSizeRadio)),
+    sg.Radio("100$ - 400$", "Group1", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("401$ - 700$", "Group1", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("700$+", "Group1", font=(fontRadio, fontSizeRadio))
     ],
     [
-    sg.Text("On a scale from 1 to 5, how active would you say you are?"),
-    sg.Radio("1", "Group2"),
-    sg.Radio("2", "Group2"),
-    sg.Radio("3", "Group2"),
-    sg.Radio("4", "Group2"),
-    sg.Radio("5", "Group2")
+    sg.Text("On a scale from 1 to 5, how active would you say you are?", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("1", "Group2",default=True, font=(fontRadio, fontSizeRadio)),
+    sg.Radio("2", "Group2",font=(fontRadio, fontSizeRadio)),
+    sg.Radio("3", "Group2", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("4", "Group2", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("5", "Group2", font=(fontRadio, fontSizeRadio))
     ],
     [
-    sg.Text("How many hours per day are you away from home, for work or other reasons?"),
-    sg.Radio("1-2 hours", "Group3"),
-    sg.Radio("2-3 hours", "Group3"),
-    sg.Radio("3-5 hours", "Group3"),
-    sg.Radio("5-8 hours", "Group3"),
-    sg.Radio("8+ hours", "Group3")
+    sg.Text("How many hours per day are you away from home, for work or other reasons?", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("1-2 hours", "Group3", default=True, font=(fontRadio, fontSizeRadio)),
+    sg.Radio("2-3 hours", "Group3", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("3-5 hours", "Group3", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("5-8 hours", "Group3", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("8+ hours", "Group3", font=(fontRadio, fontSizeRadio))
     ],
     [
-    sg.Text("How many hours per week are you willing to spend on training with your pet?"),
-    sg.Radio("1-2 hours", "Group3"),
-    sg.Radio("2-3 hours", "Group3"),
-    sg.Radio("3-4 hours", "Group3"),
-    sg.Radio("4-5 hours", "Group3"),
-    sg.Radio("5+ hours", "Group3")
+    sg.Text("How many hours per week are you willing to spend on training with your pet?",font=(fontRadio, fontSizeRadio)),
+    sg.Radio("1-2 hours", "Group4",default=True, font=(fontRadio, fontSizeRadio)),
+    sg.Radio("2-3 hours", "Group4", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("3-4 hours", "Group4", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("4-5 hours", "Group4", font=(fontRadio, fontSizeRadio)),
+    sg.Radio("5+ hours", "Group4", font=(fontRadio, fontSizeRadio))
     ],
-    [sg.Button("Exit")]]
+    [sg.Button("Submit", font=(fontRadio, fontSizeRadio))]]
 
 layout = [[sg.VPush()],
          [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
@@ -55,8 +61,12 @@ window = sg.Window('Pet Lyfe', layout)
 
 while True:
     event, values = window.read()
-    
-    if event == "Exit" or event ==  sg.WIN_CLOSED:
+
+    if event == "Submit" or event ==  sg.WIN_CLOSED:
         break
     
 window.close()
+
+
+
+print(values)
