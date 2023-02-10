@@ -128,7 +128,7 @@ if valuesQ2[5]:
     petsAlreadyOwnedList.append("Fish")
 
 textCatWarning = """Just a reminder that cats can cohabitate with any of the pets we will recomend as long as proper cat proofing is done to cages and aquariums."""
-print(petsAlreadyOwnedList)
+
 
 #inference engine that warns the user of they own a cat
 if (valuesQ2[1]):
@@ -215,7 +215,7 @@ if len(df.index)!= 1:
     column = [
     
     [
-    sg.Text("Are you going to be away from your pet "+timeAloneString+" hours",font=(fontQuestion, fontSizeQuestion)),
+    sg.Text("Are there times when you will be away from your pet for more then "+timeAloneString+" hours",font=(fontQuestion, fontSizeQuestion)),
     sg.Radio("Yes","Group3", default=True, font=(fontQuestion, fontSizeQuestion)),
     sg.Radio("No", "Group3", font=(fontQuestion, fontSizeQuestion))
     ],
@@ -239,14 +239,26 @@ if len(df.index)!= 1:
     if valuesQ4[0]:
         df = df[df['Hours pet can be left alone'] >= timeAloneFloat] 
 
+
+df = df.reset_index()
+petChosen = df._get_value(0, 'Pet')
+#inference engine that warns the user of they own a cat
+column = [
+[sg.Text("The pet we recomend is: " + petChosen, size=(60,4), justification="center",font=(fontTitle, fontSizeTitle)) ],  
+[sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
+layout = [[sg.VPush()],
+        [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
+        [sg.VPush()]]
+
+window = sg.Window('Pet Lyfe', layout)
+while True:
+    event, values = window.read()
+
+    if event == "Next" or event ==  sg.WIN_CLOSED:
+        break
+    
+window.close()
 print(df)
-
-#if len(df.index)!= 1:
-
-#while(len(df.index)==1):
-    # do something
-
-#df = df.reset_index()
 
 
 
