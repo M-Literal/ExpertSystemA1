@@ -74,13 +74,17 @@ valuesQ1 = values
 #inference engine removing pets that the user is allergic to from list
 if valuesQ1[0]:
     possiblePetList.remove("Dog")
+    df = df.drop(0)
 if valuesQ1[1]:
     possiblePetList.remove("Cat")
+    df = df.drop(1)
 if valuesQ1[2]:
     possiblePetList.remove("Bird")
+    df = df.drop(2)
 if valuesQ1[3]:
     possiblePetList.remove("Hamster")
-
+    df = df.drop(5)
+print(df)
 column = [
     
     [
@@ -143,5 +147,39 @@ if (valuesQ2[1]):
             break
     
     window.close()
+
+budgetMedianFloat = df['Yearly Budget'].median()
+budgetMedianString = str(budgetMedianFloat)
+column = [
+    
+    [
+    sg.Text("Are you prepared to pay $"+budgetMedianString+" or more per year for your pet?",font=(fontQuestion, fontSizeQuestion)),
+    sg.Radio("Yes","Group1", default=True, font=(fontQuestion, fontSizeQuestion)),
+    sg.Radio("No", "Group1", font=(fontQuestion, fontSizeQuestion))
+    ],
+    [sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
+
+layout = [[sg.VPush()],
+         [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
+         [sg.VPush()]]
+
+window = sg.Window('Pet Lyfe', layout)
+
+while True:
+    event, values = window.read()
+
+    if event == "Next" or event ==  sg.WIN_CLOSED:
+        break
+    
+window.close()
+
+valuesQ3 = values
+if valuesQ3[0]:
+    df = df[df['Yearly Budget'] > budgetMedianFloat] 
+#while(len(df.index)==1):
+    # do something
+
+df = df.reset_index()
+
 
 
