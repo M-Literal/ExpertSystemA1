@@ -9,7 +9,7 @@ import PySimpleGUI as sg
 import pandas as pd
 
 df = pd.read_csv(r'KnowledgeBase.csv')
-print(df)
+explanationSubsystem = "This pet was chosen for you because: "
 
 text = """Welcome to Pet Lyfe! This is an \"expert system\"  that will ask you a
 series of questions to estimate what kind of pet fits your lifestyle best.
@@ -56,6 +56,7 @@ column = [
     ],
     [sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
 
+
 layout = [[sg.VPush()],
          [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
          [sg.VPush()]]
@@ -70,6 +71,7 @@ while True:
     
 window.close()
 valuesQ1 = values 
+explanationSubsystem = explanationSubsystem + "You are not alergic to it. "
 
 #inference engine removing pets that the user is allergic to from list
 if valuesQ1[0]:
@@ -84,7 +86,8 @@ if valuesQ1[2]:
 if valuesQ1[3]:
     possiblePetList.remove("Hamster")
     df = df.drop(5)
-print(df)
+
+
 column = [
     
     [
@@ -127,7 +130,7 @@ if valuesQ2[4]:
 if valuesQ2[5]:
     petsAlreadyOwnedList.append("Fish")
 
-textCatWarning = """Just a reminder that cats can cohabitate with any of the pets we will recomend as long as proper cat proofing is done to cages and aquariums."""
+textCatWarning = """ Just a reminder that cats can cohabitate with any of the pets we will recomend as long as proper cat proofing is done to cages and aquariums."""
 
 
 #inference engine that warns the user of they own a cat
@@ -147,6 +150,7 @@ if (valuesQ2[1]):
             break
     
     window.close()
+
 
 budgetMedianFloat = df['Yearly Budget'].median()
 budgetMedianString = str(budgetMedianFloat)
@@ -175,8 +179,12 @@ window.close()
 
 valuesQ3 = values
 if valuesQ3[0]:
-    df = df[df['Yearly Budget'] >= budgetMedianFloat] 
-print(df)
+    df = df[df['Yearly Budget'] >= budgetMedianFloat]
+    explanationSubsystem = explanationSubsystem + " You said you were comfortable paying more then "+ budgetMedianString + "$ per year."
+else:
+    df = df[df['Yearly Budget'] < budgetMedianFloat]
+    explanationSubsystem = explanationSubsystem + " You said you wanted to pay less than "+ budgetMedianString + "$ per year."
+
 if len(df.index)!= 1:
     timeRequirmentFloat = df['Time Commitment per day in Minutes'].median()
     timeRequirmentString = str(timeRequirmentFloat)
@@ -206,8 +214,10 @@ if len(df.index)!= 1:
     valuesQ4 = values
     if valuesQ4[0]:
         df = df[df['Time Commitment per day in Minutes'] >= timeRequirmentFloat] 
-
-print(df)
+        explanationSubsystem = explanationSubsystem + " You said you were comfortable spending "+ timeRequirmentString + " or more minutes per day on pet upkeep."
+    else:
+        df = df[df['Time Commitment per day in Minutes'] < timeRequirmentFloat] 
+        explanationSubsystem = explanationSubsystem + " You said you were comfortable spending less than "+ timeRequirmentString + " minutes per day on pet upkeep."
 
 if len(df.index)!= 1:
     timeAloneFloat = df['Hours pet can be left alone'].median()
@@ -237,14 +247,21 @@ if len(df.index)!= 1:
 
     valuesQ4 = values
     if valuesQ4[0]:
-        df = df[df['Hours pet can be left alone'] >= timeAloneFloat] 
-
-
+        df = df[df['Hours pet can be left alone'] >= timeAloneFloat]
+        explanationSubsystem = explanationSubsystem + " You said you might need to leave the pet more then "+ timeAloneString + " hours at a time." 
+    else:
+        df = df[df['Hours pet can be left alone'] < timeAloneFloat] 
+        explanationSubsystem = explanationSubsystem + " You said you wouldn't need to leave the pet more then "+ timeAloneString + " hours at a time." 
 df = df.reset_index()
 petChosen = df._get_value(0, 'Pet')
-#inference engine that warns the user of they own a cat
+if petChosen == "Cat":
+    explanationSubsystem = explanationSubsystem + textCatWarning
+
+petStats = petChosen+"s cost roughly"+ str(df._get_value(0, 'Yearly Budget'))+"$ per year. They require "
 column = [
-[sg.Text("The pet we recomend is: " + petChosen, size=(60,4), justification="center",font=(fontTitle, fontSizeTitle)) ],  
+[sg.Text("The pet we recomend is: " + petChosen , size=(80,4), justification="center",font=(fontTitle, fontSizeTitle)) ],  
+[sg.Text(explanationSubsystem , size=(80,10), justification="center",font=(fontTitle, fontSizeTitle)) ],
+[sg.Text(petStats , size=(80,10), justification="center",font=(fontTitle, fontSizeTitle)) ],  
 [sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
 layout = [[sg.VPush()],
         [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
