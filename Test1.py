@@ -175,11 +175,78 @@ window.close()
 
 valuesQ3 = values
 if valuesQ3[0]:
-    df = df[df['Yearly Budget'] > budgetMedianFloat] 
+    df = df[df['Yearly Budget'] >= budgetMedianFloat] 
+print(df)
+if len(df.index)!= 1:
+    timeRequirmentFloat = df['Time Commitment per day in Minutes'].median()
+    timeRequirmentString = str(timeRequirmentFloat)
+    column = [
+    
+    [
+    sg.Text("Are you prepared to spend "+timeRequirmentString+" or more minutes per day taking care of your pet?",font=(fontQuestion, fontSizeQuestion)),
+    sg.Radio("Yes","Group2", default=True, font=(fontQuestion, fontSizeQuestion)),
+    sg.Radio("No", "Group2", font=(fontQuestion, fontSizeQuestion))
+    ],
+    [sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
+
+    layout = [[sg.VPush()],
+         [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
+         [sg.VPush()]]
+
+    window = sg.Window('Pet Lyfe', layout)
+
+    while True:
+        event, values = window.read()
+
+        if event == "Next" or event ==  sg.WIN_CLOSED:
+            break
+    
+    window.close()
+
+    valuesQ4 = values
+    if valuesQ4[0]:
+        df = df[df['Time Commitment per day in Minutes'] >= timeRequirmentFloat] 
+
+print(df)
+
+if len(df.index)!= 1:
+    timeAloneFloat = df['Hours pet can be left alone'].median()
+    timeAloneString = str(timeAloneFloat)
+    column = [
+    
+    [
+    sg.Text("Are you going to be away from your pet "+timeAloneString+" hours",font=(fontQuestion, fontSizeQuestion)),
+    sg.Radio("Yes","Group3", default=True, font=(fontQuestion, fontSizeQuestion)),
+    sg.Radio("No", "Group3", font=(fontQuestion, fontSizeQuestion))
+    ],
+    [sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
+
+    layout = [[sg.VPush()],
+         [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
+         [sg.VPush()]]
+
+    window = sg.Window('Pet Lyfe', layout)
+
+    while True:
+        event, values = window.read()
+
+        if event == "Next" or event ==  sg.WIN_CLOSED:
+            break
+    
+    window.close()
+
+    valuesQ4 = values
+    if valuesQ4[0]:
+        df = df[df['Hours pet can be left alone'] >= timeAloneFloat] 
+
+print(df)
+
+#if len(df.index)!= 1:
+
 #while(len(df.index)==1):
     # do something
 
-df = df.reset_index()
+#df = df.reset_index()
 
 
 
