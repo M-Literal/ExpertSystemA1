@@ -36,6 +36,7 @@ fontSizeTitle = 25
 fontQuestion = "Helvetica"
 fontSizeQuestion = 20
 
+#Try / except that terminates program when window is closed
 try:
     # first window that explains the expert system
     column = [
@@ -282,7 +283,7 @@ try:
     # display of the stats of chosen pet
     [sg.Text(petStats , size=(80,5), justification="center",font=(fontTitle, fontSizeTitle)) ],  
     
-    [sg.Button("Next", font=(fontQuestion, fontSizeQuestion))]]
+    [sg.Button("Close", font=(fontQuestion, fontSizeQuestion))]]
     layout = [[sg.VPush()],
             [sg.Push(), sg.Column(column, element_justification='c'), sg.Push()],
             [sg.VPush()]]
@@ -291,7 +292,7 @@ try:
     while True:
         event, values = window.read()
     
-        if event == "Next" or event ==  sg.WIN_CLOSED:
+        if event == "Close" or event ==  sg.WIN_CLOSED:
             break
 except:
     window.close()
